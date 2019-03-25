@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<head>
+    <title>Lab3 JSF Application</title>
+    <link type = "text/css" rel = "stylesheet"
+          href = "/lab3-1.0-SNAPSHOT/resources/css/Style.css" />
+    <h:outputScript name="jquery.js" library="js"/>
+    <h:outputScript library="js" name="check.js"/>
+</head>
+
+<h:body>
+    <table width="85%" border="0" align="center">
+        <tr>
+            <td><h1>Лабораторная работа 3 Базаровой Анны Вариант 65214 </h1></td>
+        </tr>
+    </table>
+    <table width="85%" border="1" align="center">
+        <tr>
+            <td>
+                <h:form id="form">
+
+                    <table border="1" width="100%">
+                        <tr>
+                            <td width="50%">
+                                <p><b>Выберите X</b></p>
+                                <h:selectOneRadio id="x" name="x" value="#{Point.x}">
+                                    <f:selectItem itemValue="1" itemLabel="1"/>
+                                    <span class="whitespace">    </span>
+                                    <f:selectItem itemValue="1.5" itemLabel="1.5"/>
+                                    <span class="whitespace">    </span>
+                                    <f:selectItem itemValue="2" itemLabel="2"/>
+                                    <span class="whitespace">    </span>
+                                    <f:selectItem itemValue="2.5" itemLabel="2.5"/>
+                                    <span class="whitespace">    </span>
+                                    <f:selectItem itemValue="3" itemLabel="3"/>
+                                    <span class="whitespace">    </span>
+                                </h:selectOneRadio>
+                            </td>
+
+                            <td rowspan="2">
+                                <!--здесь будет канвас-->
+                                <canvas height="400" width="400" id="graph" onclick="interract('${Point.r}'); drawAll('${Point.r}')" class="graph"/>
+                                <script>window.onload = function (ev) {
+                                    draw('graph');
+                                    drawAll('${Point.r}');
+                                }</script>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <p><b>Выберите Y</b></p>
+
+                                <h:inputText id="y" value="#{Point.y}"> </h:inputText>
+
+                                <p><b>Выберите R</b></p>
+
+                                <h:selectOneRadio id="r" name="r" value="#{Point.r}">
+                                    <f:selectItem itemValue="1" itemLabel="1"/>
+                                    <span class="whitespace">    </span>
+                                    <f:selectItem itemValue="1.5" itemLabel="1.5"/>
+                                    <span class="whitespace">    </span>
+                                    <f:selectItem itemValue="2" itemLabel="2"/>
+                                    <span class="whitespace">    </span>
+                                    <f:selectItem itemValue="2.5" itemLabel="2.5"/>
+                                    <span class="whitespace">    </span>
+                                    <f:selectItem itemValue="3" itemLabel="3"/>
+                                    <span class="whitespace">    </span>
+                                </h:selectOneRadio>
+                                <button onclick="validation('${Point.x}','${Point.y}','${Point.r}');">
+                                    Кнопка
+                                </button>
+
+                                <script>
+                                    window.onkeydown = function (e) {
+                                        let code = e.key;
+                                        if (code === 'Enter') {
+                                            validation('${Point.x}','${Point.y}','${Point.r}');
+                                        }
+                                    };
+                                </script>
+                            </td>
+                        </tr>
+                    </table>
+                </h:form></td>
+        </tr>
+
+        <!--Return button-->
+        <tr>
+            <td>
+                <a href="index.xhtml">Хочу и дальше залипать на котиков и часики</a>
+            </td>
+        </tr>
+        <tr><td>
+            <!--AllResults - get list of all points-->
+
+            <h:dataTable value="#{Point.allResults}" var="result"
+                         styleClass="article-table"
+                         rules="all" id="result-table">
+                <h:column>
+                    <f:facet name="header">X </f:facet>
+                    #{result.x}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Y </f:facet>
+                    #{result.y}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">R </f:facet>
+                    #{result.r}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Попадание </f:facet>
+                    <h:panelGroup rendered="#{result.hit}">
+                        <span id="yes">да</span>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{!result.hit}">
+                        <span id="no">нет</span>
+                    </h:panelGroup>
+                </h:column>
+            </h:dataTable>
+
+        </td></tr>
+    </table>
+
+
+</h:body>
+
+</html>
