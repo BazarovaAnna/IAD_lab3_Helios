@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:p="http://primefaces.org/ui">
 <head>
     <title>Lab3 JSF Application</title>
     <link type = "text/css" rel = "stylesheet"
@@ -86,6 +86,8 @@
                             </td>
                         </tr>
                     </table>
+                    <!-- TODO: -->
+                    <p:remoteCommand name="sendPoint" action="#{Point.addPoint}"/>
                 </h:form></td>
         </tr>
 

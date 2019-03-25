@@ -1,8 +1,10 @@
 function validation(x, y, r) {
     //put entering to db
-    if (x!=null&&y!=null&&r!=null){
-    $.get('PointsDB',{xvalue:x,yvalue:y,rvalue:r}, function(data) {
-    });}
+    if (x!=null&&y!=null&&r!=null) {
+        //$.get('PointsDB',{xvalue:x,yvalue:y,rvalue:r}, function(data) {
+        //});}
+        sendPoint({xvalue:x,yvalue:y,rvalue:r});
+    }
     window.location.reload(true);
     drawAll(r);
     drawPoint('graph', x, y, r);

@@ -4,12 +4,14 @@ import com.bazarova.util.DBManager;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @ManagedBean(name="Point")
 @ViewScoped
@@ -111,5 +113,36 @@ public class Point {
         return null;
     }
 
+    public  void addPoint(){
+        Map<String, String> requestParameterMap = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        String xstr = requestParameterMap.get("xvalue");
+        String ystr = requestParameterMap.get("yvalue");
+        String rstr = requestParameterMap.get("rvalue");
+        if (xstr!=null && !xstr.equals("")&&ystr!=null && !ystr.equals("")&&rstr!=null && !rstr.equals("")) {
+            Point p=new Point();
+            p.setX(xstr);
+            p.setR(ystr);
+            p.setY(rstr);
+            p.setHit();
+            add(p);
+            System.out.println("added to db");
+
+        }else{
+            System.out.println("not added to db");
+        }
+    }
+
+    public static void add(Point p){
+        PreparedStatement pst = null;
+        Connection connection = DBManager.getConnection();
+        String stm = "INSERT INTO Points (Xvalue,Yvalue,Rvalue,Match) VALUES ('\"+p.getX()+\"','\"+p.getY()+\"','\"+p.getR()+\"','\"+p.getHit()+\"');";
+        try {
+            pst = connection.prepareStatement(stm);
+            pst.executeUpdate(stm);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
